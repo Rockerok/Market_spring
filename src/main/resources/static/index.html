@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" ng-app = "my_market_front">
+<head>
+    <meta charset="UTF-8">
+    <title>Список продуктов</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="index.js"></script>
+</head>
+<body ng-app="my_market_front">
+<div class="container" ng-controller="appController">
+    <h2>Главная страничка магазина</h2>
+    <table class="table table-hover">
+        <thead><tr><td> Id </td><td>Название</td><td>Стоимость</td><td> </td><td> </td><td> </td></tr></thead>
+        <tbody>
+        <tr ng-repeat="p in productsList">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td><button type="button" class="btn btn-info" ng-click="addToCart(p.id)">Add to Cart</button></td>
+            <td><a href = # class="btn btn-info" ng-click="showProductInfo(p.id)">Подробнее</a></td>
+            <td><button type="button" class="btn btn-danger" ng-click="deleteProductById(p.id)">Delete</button></td>
+        </tr>
+        </tbody>
+    </table>
+    {{cart}}
+    <table class="table table-hover">
+        <thead><tr><td> Id </td><td>Название</td><td>Стоимость</td><td> </td></tr></thead>
+        <tbody>
+        <tr ng-repeat="p in cart">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td><button type="button" class="btn btn-danger" ng-click="deleteFromCartById(p.id)">Delete</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

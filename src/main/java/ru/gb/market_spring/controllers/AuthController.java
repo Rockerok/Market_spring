@@ -34,9 +34,4 @@ public class AuthController {
         String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthResponse(token));
     }
-
-    @GetMapping ("/secured")
-    public String MySecurity(){
-        return "Test Security";
-    }
 }

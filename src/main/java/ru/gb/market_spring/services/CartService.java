@@ -4,26 +4,36 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.gb.market_spring.entities.Cart;
 import ru.gb.market_spring.entities.Product;
-import ru.gb.market_spring.repositories.CartRepository;
+import ru.gb.market_spring.exceptions.ResourceNotFoundException;
 
-import java.util.List;
+import javax.annotation.PostConstruct;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
-    private final CartRepository cartRepository;
-    private Cart cart;
+        private Cart tempCart;
+        private final ProductService productService;
 
-    public Cart cartAddProduct(Product product) {
-        cart.setProductCart(product);
-        return cart;
-    }
+        @PostConstruct
+        public void init(){
+            tempCart=new Cart();
+        }
 
-    public void deleteCartProductById(Long id) {
-        cart.setRemoveProd(id);
-    }
+        public Cart getCurrentCart(){
+            return tempCart;
+        }
 
-    public List<Product> findAllFromCart () {
-        return cartRepository.findAll();
-    }
+        public void addCart(Long productId){
+            Product product = productService.findById(productId)
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException("не удалось добавить продукт с id:"+productId+" в корзину. Продукт не найден"));
+            tempCart.addProductToCart(product);
+        }
+
+        public void deleteCartProductById(Long productId){
+            Product product = productService.findById(productId)
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException("не удалось удалить продукт с id:"+productId+" из корзины. Продукт не найден"));
+            tempCart.deleteProductFromCart(product);
+        }
 }

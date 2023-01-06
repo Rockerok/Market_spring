@@ -35,13 +35,13 @@
             <td>{{item.productTitle}}</td>
             <td>{{item.quantity}}</td>
             <td>{{item.pricePerProduct+' x '+ item.quantity+' = '+item.price}}</td>
-            <td><button type="button" class="btn btn-danger" ng-click="deleteFromCartById(item.productId)">Delete</button></td>
+            <td><button type="button" class="btn btn-danger" ng-click="removeFromCart(item.productId)">Удалить из корзины</button></td>
         </tr>
         <tr>
             <td>ИТОГО</td>
             <td></td>
             <td>{{cart.totalPrice}}</td>
-            <td><button type="button" class="btn btn-danger" ng-click="deleteCart()">Delete Cart</button></td>
+            <td><button type="button" class="btn btn-secondary" ng-click="clearCart()">Очистить корзину</button></td>
         </tr>
         </tbody>
     </table>

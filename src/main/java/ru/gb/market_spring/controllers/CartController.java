@@ -1,7 +1,6 @@
 package ru.gb.market_spring.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.market_spring.entities.Cart;
 import ru.gb.market_spring.services.CartService;
@@ -22,14 +21,18 @@ public class CartController {
         return cartService.getCurrentCart();
     }
 
+    @GetMapping("/remove/{id}")
+    public void removeFromCart(@PathVariable Long id){
+        cartService.remove(id);
+    }
+
+    @GetMapping("/clear")
+    public void clearCart(){
+        cartService.clear();
+    }
     @GetMapping("/new")
     public Cart newCart(){
         cartService.init();
         return cartService.getCurrentCart();
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public void deleteCartProductById(@PathVariable Long id){
-        cartService.deleteCartProductById(id);
     }
 }

@@ -30,10 +30,10 @@ public class CartService {
             tempCart.addProductToCart(product);
         }
 
-        public void deleteCartProductById(Long productId){
-            Product product = productService.findById(productId)
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException("не удалось удалить продукт с id:"+productId+" из корзины. Продукт не найден"));
-            tempCart.deleteProductFromCart(product);
+        public void remove(Long productId){
+            tempCart.remove(productId);
+        }
+        public void clear(){
+            tempCart.clear();
         }
 }

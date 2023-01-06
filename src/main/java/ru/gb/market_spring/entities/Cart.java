@@ -18,38 +18,46 @@ public class Cart {
         return Collections.unmodifiableList(items);
     }
     public void addProductToCart (Product product){ //TODO: Д/З
-        if (increaseQuantity(product)) { return; }
+        for (CartItem item: items) {
+            if (item.getProductId().equals(product.getId())) {
+                item.changeQuantity(1);
+                recalculate();
+                return;
+            }
+        }
         items.add(new CartItem(product.getId(), product.getTitle(), 1, product.getPrice(), product.getPrice()));
         recalculate();
     }
-    public void deleteProductFromCart (Product product){
-        items.removeIf(item -> item.getProductId().equals(product.getId()));
-        recalculate();
+    public void remove(Long productId){
+        if(items.removeIf(item -> item.getProductId().equals(productId))) {
+            recalculate();
+        }
     }
-    public boolean increaseQuantity (Product product){
+    public void increaseQuantity (Long productId){
         for (CartItem item: items){
-            if (item.getProductId().equals(product.getId())){
-                item.setQuantity(item.getQuantity()+1);
-                item.setPrice(item.getPricePerProduct() * item.getQuantity());
+            if (item.getProductId().equals(productId)){
+                item.changeQuantity(1);
                 recalculate();
-                return true;
+                return;
             }
         }
-        return false;
     }
-    public void decreaseQuantity (Product product){
+    public void decreaseQuantity (Long productId){
         for (CartItem item: items){
-            if (item.getProductId().equals(product.getId())){
+            if (item.getProductId().equals(productId)){
                 if (item.getQuantity()==1){
-                    deleteProductFromCart (product);
+                    remove(productId);
                 }else {
-                    item.setQuantity(item.getQuantity()-1);
-                    item.setPrice(item.getPricePerProduct() * item.getQuantity());
+                    item.changeQuantity(-1);
                 }
                 recalculate();
                 return;
             }
         }
+    }
+    public void clear(){
+        items.clear();
+        totalPrice=0;
     }
     private void recalculate(){
         totalPrice = 0;

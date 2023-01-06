@@ -14,7 +14,7 @@ angular.module('my_market_front',[]).controller('appController',function ($scope
    }
 
     $scope.deleteProductById = function (productId) {
-        $http.delete('http://localhost:8189/market_spring/api/v1/products/delete/'+productId).then(function () {
+        $http.delete('http://localhost:8189/market_spring/api/v1/products/delete/'+productId).then(function (response) {
             $scope.loadProducts();
         });
     }
@@ -31,17 +31,13 @@ angular.module('my_market_front',[]).controller('appController',function ($scope
             $scope.loadCart();
         });
     }
-    $scope.deleteFromCartById = function (productId) {
-        $http.delete('http://localhost:8189/market_spring/api/v1/cart/delete/'+productId).then(function () {
+    $scope.removeFromCart = function (productId) {
+        $http.get('http://localhost:8189/market_spring/api/v1/cart/remove/'+productId).then(function (response) {
             $scope.loadCart();
         });
     }
-    $scope.deleteCart = function () {
-       // if(confirm("Вы точно хотите удалить текущую корзину?")) {
-       //     $http.delete('http://http://localhost:8189/market_spring/api/v1/cart/new').then(function () {
-       //     });
-       // }
-        $http.delete('http://localhost:8189/market_spring/api/v1/cart/new').then(function () {
+    $scope.clearCart = function () {
+        $http.get('http://localhost:8189/market_spring/api/v1/cart/clear').then(function (response) {
             $scope.loadCart();
         });
     }

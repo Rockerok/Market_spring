@@ -9,7 +9,6 @@ import java.util.List;
 @Data
 public class Cart {
     private List<CartItem> items;
-    private int quantityProd;
     private int totalPrice;
 
     public Cart(){
@@ -19,32 +18,39 @@ public class Cart {
         return Collections.unmodifiableList(items);
     }
     public void addProductToCart (Product product){ //TODO: Д/З
-        int posProd=-1;
-        for (CartItem item: items){
-            if (item.getProductId()==(product.getId())){
-                posProd = items.indexOf(item);
-            }
-        }
-        if (posProd!=-1){
-            CartItem cartItem = items.get(posProd);
-            cartItem.setQuantity(cartItem.getQuantity()+1);
-            cartItem.setPrice(cartItem.getPricePerProduct() * cartItem.getQuantity());
-            items.set(posProd,cartItem);
-        }else {
-            items.add(new CartItem(product.getId(), product.getTitle(), 1, product.getPrice(), product.getPrice()));
-        }
+        if (increaseQuantity(product)) { return; }
+        items.add(new CartItem(product.getId(), product.getTitle(), 1, product.getPrice(), product.getPrice()));
         recalculate();
     }
-
     public void deleteProductFromCart (Product product){
-        for (CartItem item: items){
-            if (item.getProductId()==(product.getId())){
-                items.remove(this);
-            }
-        }
+        items.removeIf(item -> item.getProductId().equals(product.getId()));
         recalculate();
     }
-
+    public boolean increaseQuantity (Product product){
+        for (CartItem item: items){
+            if (item.getProductId().equals(product.getId())){
+                item.setQuantity(item.getQuantity()+1);
+                item.setPrice(item.getPricePerProduct() * item.getQuantity());
+                recalculate();
+                return true;
+            }
+        }
+        return false;
+    }
+    public void decreaseQuantity (Product product){
+        for (CartItem item: items){
+            if (item.getProductId().equals(product.getId())){
+                if (item.getQuantity()==1){
+                    deleteProductFromCart (product);
+                }else {
+                    item.setQuantity(item.getQuantity()-1);
+                    item.setPrice(item.getPricePerProduct() * item.getQuantity());
+                }
+                recalculate();
+                return;
+            }
+        }
+    }
     private void recalculate(){
         totalPrice = 0;
         for (CartItem item: items){

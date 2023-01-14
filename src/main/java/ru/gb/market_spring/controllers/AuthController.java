@@ -11,8 +11,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.market_spring.dto.AuthRequest;
 import ru.gb.market_spring.dto.AuthResponse;
+import ru.gb.market_spring.dto.StringResponse;
 import ru.gb.market_spring.services.UserService;
 import ru.gb.market_spring.utils.JwtTokenUtil;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -33,5 +36,10 @@ public class AuthController {
         UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthResponse(token));
+    }
+
+    @GetMapping("/auth_check")
+    public StringResponse authCheck(Principal principal){
+        return new StringResponse(principal.getName());
     }
 }

@@ -1,8 +1,62 @@
-angular.module('my_market_front',[]).controller('appController',function ($scope,$http){
+angular.module('my_market_front',['ngStorage']).controller('appController',function ($scope,$http,$localStorage){
+
+    //Authorization
+    $scope.tryToAuth = function () {
+        $http.post('http://localhost:8189/market_spring/api/v1/auth', $scope.user)
+            .then(function successCallback(response) {
+                if (response.data.token) {
+                    $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                    $localStorage.springMarketUser = {username: $scope.user.username, token: response.data.token};
+                    $scope.user.username = null;
+                    $scope.user.password = null;
+                }
+            }, function errorCallback (response){
+            });
+    };
+
+    $scope.tryToLogout = function () {
+        $scope.clearUser();
+        $scope.user = null;
+    };
+
+    $scope.clearUser = function (){
+        delete $localStorage.springMarketUser;
+        $http.defaults.headers.common.Authorization = '';
+    };
+
+    $scope.isUserLoggedIn = function (){
+        if($localStorage.springMarketUser){
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    if ($localStorage.springMarketUser){
+        try{
+            let jwt = $localStorage.springMarketUser.token;
+            let payload = JSON.parse(atab(jwt.split('.')[1]));
+            let currentTime = parseInt (new Date().getTime()/1000);
+            if (currentTime >payload.exp){
+                console.log("Token is expired!!!");
+                delete  $localStorage.springMarketUser;
+                $http.defaults.headers.common.Authorization='';
+            }
+        } catch (e){
+        }
+        $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springMarketUser.token;
+    }
+
+    $scope.checkAuth = function (){
+        $http.get('http://localhost:8189/market_spring/api/v1/auth_check').then(function (response) {
+            alert(response.data.value);
+        });
+    };
+
+    // products
+
    $scope.loadProducts = function () {
        $http.get('http://localhost:8189/market_spring/api/v1/products').then(function (response) {
-           // console.log(response.data);
-           // let products = response.data();
            $scope.productsList = response.data;
        });
    }
@@ -39,6 +93,20 @@ angular.module('my_market_front',[]).controller('appController',function ($scope
     $scope.clearCart = function () {
         $http.get('http://localhost:8189/market_spring/api/v1/cart/clear').then(function (response) {
             $scope.loadCart();
+        });
+    }
+
+    // Заказы
+
+    $scope.checkOrder = function (productId) {
+        $http.get('http://localhost:8189/market_spring/api/v1/auth_check').then(function () {
+            alert("Для продолжения авторизуйтесь, пожалуйста!");
+        });
+    }
+    $scope.createOrder = function (productId) {
+        $http.get('http://localhost:8189/market_spring/api/v1/orders/create'+productId).then(function (response) {
+            alert ("Order is created");
+            $scope.clearCart();
         });
     }
 

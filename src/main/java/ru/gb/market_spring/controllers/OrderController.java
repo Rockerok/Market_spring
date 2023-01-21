@@ -3,10 +3,7 @@ package ru.gb.market_spring.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.gb.market_spring.entities.Order;
-import ru.gb.market_spring.entities.Product;
 import ru.gb.market_spring.entities.User;
-import ru.gb.market_spring.repositories.OrdersRepository;
 import ru.gb.market_spring.services.OrderService;
 import ru.gb.market_spring.services.UserService;
 

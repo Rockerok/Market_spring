@@ -3,10 +3,9 @@ package ru.gb.market_spring.services;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.gb.market_spring.dto.OrderDto;
 import ru.gb.market_spring.entities.*;
-import ru.gb.market_spring.repositories.OrdersItemsRepository;
-import ru.gb.market_spring.repositories.OrdersRepository;
+import ru.gb.market_spring.repositories.OrderItemRepository;
+import ru.gb.market_spring.repositories.OrderRepository;
 
 import java.time.LocalDateTime;
 
@@ -16,8 +15,8 @@ import java.time.LocalDateTime;
 public class OrderService {
     private ProductService productService;
     private CartService cartService;
-    private OrdersRepository ordersRepository;
-    private OrdersItemsRepository orderItemRepository;
+    private OrderRepository ordersRepository;
+    private OrderItemRepository orderItemRepository;
 
 
     public void createOrder (User user){
@@ -33,7 +32,7 @@ public class OrderService {
         }
         order.setTotal_price(totalPrice);
         createOrderItems(cart,order);
-//        ordersRepository.save(order);
+        ordersRepository.save(order);
     }
 
     private void createOrderItems(Cart cart, Order order) {
@@ -49,6 +48,6 @@ public class OrderService {
         ));
 
 
-//        orderItemRepository.save(orderItem);
+        orderItemRepository.save(orderItem);
     }
 }

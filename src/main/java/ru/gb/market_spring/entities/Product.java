@@ -23,6 +23,10 @@ public class Product {
     @Column (name = "price")
     private int price;
 
+    @ManyToOne
+    @JoinColumn(name = "categories_id")
+    private Category category;
+
     @CreationTimestamp
     @Column (name = "created_at")
     private LocalDateTime createdAt;
@@ -30,8 +34,4 @@ public class Product {
     @CreationTimestamp
     @Column (name = "updated_at")
     private LocalDateTime updateAt;
-
-//    @ManyToOne
-//    @JoinColumn(name = "categories_id")
-//    private Categories categories;
 }

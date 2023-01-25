@@ -2,4 +2,9 @@ server:
   port: 8190
   servlet:
     context-path: /market_spring_carts
-
+integrations:
+  product-service:
+    url: http://localhost:8189/spring_market/
+    connect-timeout: 10000
+    read-timeout: 5000
+    write-timeout: 5000

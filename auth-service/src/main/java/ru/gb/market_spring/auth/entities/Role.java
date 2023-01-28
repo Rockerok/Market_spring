@@ -1,4 +1,4 @@
-package ru.gb.market_spring.core.entities;
+package ru.gb.market_spring.auth.entities;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;

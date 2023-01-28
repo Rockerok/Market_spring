@@ -1,4 +1,4 @@
-package ru.gb.market_spring.core.utils;
+package ru.gb.market_spring.auth.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -12,18 +12,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenUtil {
-//    @Value("${jwt.secret}")
     @Value("${jwt.secret}")
+//    @Value("${jwt.secret}")
     private String secret;
 
 
-//    @Value("${jwt.lifetime}")
     @Value("${jwt.lifetime}")
+//    @Value("${jwt.lifetime}")
     private Integer jwtLifetime;
 
     public String generateToken(UserDetails userDetails) {
@@ -44,19 +43,19 @@ public class JwtTokenUtil {
                 .compact();
     }
 
-    public String getUsernameFromToken(String token) {
-        return getAllClaimsFromToken(token).getSubject();
-    }
-
-
-    public List<String> getRoles(String token) {
-        return getAllClaimsFromToken(token).get("roles", List.class);
-    }
-
-    private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .getBody();
-    }
+    //    public String getUsernameFromToken(String token) {
+    //        return getAllClaimsFromToken(token).getSubject();
+    //    }
+    //
+    //
+    //    public List<String> getRoles(String token) {
+    //        return getAllClaimsFromToken(token).get("roles", List.class);
+    //    }
+    //
+    //    private Claims getAllClaimsFromToken(String token) {
+    //        return Jwts.parser()
+    //                .setSigningKey(secret)
+    //                .parseClaimsJws(token)
+    //                .getBody();
+    //    }
 }

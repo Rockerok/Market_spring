@@ -1,4 +1,4 @@
-package ru.gb.market_spring.core.services;
+package ru.gb.market_spring.auth.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,9 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.gb.market_spring.core.entities.Role;
-import ru.gb.market_spring.core.entities.User;
-import ru.gb.market_spring.core.repositories.UserRepository;
+import ru.gb.market_spring.auth.entities.Role;
+import ru.gb.market_spring.auth.entities.User;
+import ru.gb.market_spring.auth.repositories.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.Collection;

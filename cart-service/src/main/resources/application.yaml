@@ -4,7 +4,7 @@ server:
     context-path: /market_spring_carts
 integrations:
   product-service:
-    url: http://localhost:8189/spring_market/
+    url: http://localhost:8189/market_spring/
     connect-timeout: 10000
     read-timeout: 5000
     write-timeout: 5000

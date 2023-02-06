@@ -1,6 +1,6 @@
-package ru.gb.market_spring.auth.exceptions;
+package ru.gb.market_spring.exceptions;
 
-public class ResourceNotFoundException extends RuntimeException {
+public class ResourceNotFoundException extends RuntimeException{
     public ResourceNotFoundException(String message) {
         super(message);
     }

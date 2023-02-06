@@ -3,7 +3,7 @@ package ru.gb.market_spring.carts.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.gb.market_spring.api.ProductDto;
-import ru.gb.market_spring.carts.integrations.ProductServiceIntegration;
+import ru.gb.market_spring.carts.services.integrations.ProductServiceIntegration;
 import ru.gb.market_spring.carts.model.Cart;
 
 import javax.annotation.PostConstruct;

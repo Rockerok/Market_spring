@@ -1,9 +1,11 @@
 package ru.gb.market_spring.api;
 
+import java.math.BigDecimal;
+
 public class ProductDto {
     private long id;
     private String title;
-    private int price;
+    private BigDecimal price;
     private String categoryTitle;
 
     public long getId() {
@@ -22,11 +24,11 @@ public class ProductDto {
         this.title = title;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -41,7 +43,7 @@ public class ProductDto {
     public ProductDto() {
     }
 
-    public ProductDto(long id, String title, int price, String categoryTitle) {
+    public ProductDto(long id, String title, BigDecimal price, String categoryTitle) {
         this.id = id;
         this.title = title;
         this.price = price;

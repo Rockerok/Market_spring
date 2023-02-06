@@ -15,9 +15,11 @@ public class CartConverter {
     private final CartItemConverter cartItemConverter;
 
     public CartDto entityCToDto(Cart cart){
-        CartDto cartDto = new CartDto();
-        cartDto.setTotalPrice(cart.getTotalPrice());
-        cartDto.setItems(cart.getItems().stream().map(cartItemConverter::entityCIToDto).collect(Collectors.toList()));
-        return cartDto;
+        return new CartDto(cart.getItems().stream().map(cartItemConverter::entityCIToDto).collect(Collectors.toList()), cart.getTotalPrice());
+
+//        CartDto cartDto = new CartDto();
+//        cartDto.setTotalPrice(cart.getTotalPrice());
+//        cartDto.setItems(cart.getItems().stream().map(cartItemConverter::entityCIToDto).collect(Collectors.toList()));
+//        return cartDto;
     }
 }

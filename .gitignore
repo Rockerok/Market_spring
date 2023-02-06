@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/front-service/src/main/resources/static/archiv/**

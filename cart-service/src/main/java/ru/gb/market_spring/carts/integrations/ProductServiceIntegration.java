@@ -28,13 +28,22 @@ public class ProductServiceIntegration {
 //                .bodyValue // for Post
 //                    Насторойка запроса: хедеры, куки
                 .retrieve()
-                .onStatus(
-                        httpStatus -> httpStatus.value() == HttpStatus.NOT_FOUND.value(),
-                        clientResponse -> Mono.error(new ResourceNotFoundException("Товар не найден в продуктовом МС"))
-                        )
+//                .onStatus(
+//                        httpStatus -> httpStatus.value() == HttpStatus.NOT_FOUND.value(),
+//                        clientResponse -> Mono.error(new ResourceNotFoundException("Товар не найден в продуктовом МС"))
+//                        )
 //                .onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new ResourceNotFoundException("Товар не найден в продуктовом МС"))
                 .bodyToMono(ProductDto.class)
                 .block();
 
     }
+//
+//    public void clear(String username) {
+//        cartServiceWebClient.get()
+//                .uri("/api/v1/cart/0/clear")
+//                .header("username", username)
+//                .retrieve()
+//                .toBodilessEntity()
+//                .block();
+//    }
 }

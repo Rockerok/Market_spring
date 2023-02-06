@@ -29,7 +29,7 @@ public class AppConfig {
 //        return new RestTemplate();
 //    }
     @Bean
-    public WebClient productServiceWebClient(){
+    public WebClient productServiceWebClient() {
         TcpClient tcpClient = TcpClient
                 .create()
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, productServiceIntegrationProperties.getConnectTimeout())
@@ -37,6 +37,7 @@ public class AppConfig {
                     connection.addHandlerLast(new ReadTimeoutHandler(productServiceIntegrationProperties.getReadTimeout(), TimeUnit.MILLISECONDS));
                     connection.addHandlerLast(new WriteTimeoutHandler(productServiceIntegrationProperties.getWriteTimeout(), TimeUnit.MILLISECONDS));
                 });
+
         return WebClient
                 .builder()
                 .baseUrl(productServiceIntegrationProperties.getUrl())

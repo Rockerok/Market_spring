@@ -1,0 +1,18 @@
+<div>
+    <h2>Каталог товаров</h2>
+    <br/>
+    <table class="table table-hover">
+        <thead><tr><td> Id </td><td>Название</td><td>Стоимость</td><td>Инфомарция</td><td>В корзину</td><td> ! </td><td>Изменение</td></tr></thead>
+        <tbody>
+        <tr ng-repeat="p in productsList">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td><a class="btn btn-info" ng-click="showProductInfo(p.id)">Подробнее</a></td>
+            <td><a class="btn btn-info" ng-click="addToCart(p.id)">Добавить в корзину</a></td>
+            <td><button type="button" class="btn btn-danger" ng-click="deleteProductById(p.id)">! Delete !</button></td>
+<!--            <td><button type="button" class="btn btn-danger" ng-click="navToEditProduct(p.id)">Изменить</button></td>-->
+        </tr>
+        </tbody>
+    </table>
+</div>

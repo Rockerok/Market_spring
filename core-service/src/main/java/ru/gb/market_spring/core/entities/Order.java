@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class Order {
     @Column (name = "username")
     private String username;
 
-    @OneToMany (mappedBy = "order", cascade = CascadeType.PERSIST)
+    @OneToMany (mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> items;
 
     @Column (name= "address")
@@ -34,7 +35,7 @@ public class Order {
     private int phone;
 
     @Column (name = "total_price")
-    private int total_price;
+    private BigDecimal total_price;
 
     @CreationTimestamp
     @Column (name = "created_at")

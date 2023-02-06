@@ -20,7 +20,7 @@ spring:
         web-allow-others: false
 integrations:
   cart-service:
-    url: http://localhost:8190/market_spring_cart/
-    connect-timeout: 10000
-    read-timeout: 5000
+    url: http://localhost:8190/market_spring_carts/
+    connect-timeout: 500
+    read-timeout: 10000
     write-timeout: 5000

@@ -2,27 +2,18 @@ package ru.gb.market_spring.core.converters;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.gb.market_spring.api.ProductDto;
-import ru.gb.market_spring.api.ResourceNotFoundException;
-import ru.gb.market_spring.core.entities.Category;
-import ru.gb.market_spring.core.entities.Product;
-import ru.gb.market_spring.core.services.CategoryService;
+import ru.gb.market_spring.api.OrderDto;
+import ru.gb.market_spring.core.entities.Order;
+
+
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class OrderConverter {
-    private final CategoryService categoryService;
-    public ProductDto entityToTdo (Product product){
-        return new ProductDto(product.getId(), product.getTitle(), product.getPrice(), product.getCategory().getTitle());
-    }
+    private final OrderItemConverter orderItemConverter;
 
-    public Product tdoToEntity (ProductDto productDto){
-        Product p = new Product();
-        p.setId(productDto.getId());
-        p.setTitle(productDto.getTitle());
-        p.setPrice(productDto.getPrice());
-        Category c = categoryService.findByTitle(productDto.getTitle()).orElseThrow(() -> new ResourceNotFoundException("Категория не найдена"));
-        p.setCategory(c);
-        return p;
+    public OrderDto entityToDto(Order o) {
+        return new OrderDto(o.getId(), o.getItems().stream().map(orderItemConverter::entityToDto).collect(Collectors.toList()), o.getTotal_price());
     }
 }

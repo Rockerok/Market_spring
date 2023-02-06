@@ -3,38 +3,46 @@ package ru.gb.market_spring.carts.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.gb.market_spring.api.ProductDto;
-import ru.gb.market_spring.api.ResourceNotFoundException;
 import ru.gb.market_spring.carts.integrations.ProductServiceIntegration;
 import ru.gb.market_spring.carts.model.Cart;
 
 import javax.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
-        private Cart tempCart;
+        private Map<String, Cart> tempCart;
         private final ProductServiceIntegration productServiceIntegration;
 
         @PostConstruct
         public void init(){
-            tempCart=new Cart();
+            tempCart=new HashMap<>();
         }
 
-        public Cart getCurrentCart(){
-            return tempCart;
+        public Cart getCurrentCart(String cartId){
+            if (!tempCart.containsKey(cartId)) {
+                Cart cart = new Cart();
+                tempCart.put(cartId, cart);
+            }
+            return tempCart.get(cartId);
         }
 
-        public void addCart(Long productId){
+        public void addCart(String cartId, Long productId){
             ProductDto product = productServiceIntegration.getProductById(productId);
 //                    .orElseThrow(() ->
 //                            new ResourceNotFoundException("не удалось добавить продукт с id:"+productId+" в корзину. Продукт не найден"));
-            tempCart.addProductToCart(product);
+//            tempCart.addProductToCart(product);
+
+            getCurrentCart(cartId).addProductToCart(product);
         }
 
-        public void remove(Long productId){
-            tempCart.remove(productId);
+        public void remove(String cartId, Long productId){
+            ProductDto product = productServiceIntegration.getProductById(productId);
+            getCurrentCart(cartId).remove(product);
         }
-        public void clear(){
-            tempCart.clear();
+        public void clearCurrentCartId(String cartId){
+            getCurrentCart(cartId).clear();
         }
 }

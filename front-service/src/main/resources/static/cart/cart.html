@@ -1,0 +1,27 @@
+<div>
+    <h2>Корзина</h2>
+    <table class="table table-hover">
+        <thead><tr><td>Название</td><td>Количество</td><td>Цена</td><td> </td></tr></thead>
+        <tbody>
+        <tr ng-repeat="item in cart.items">
+            <td>{{item.productTitle}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.pricePerProduct+' x '+ item.quantity+' = '+item.price}}</td>
+            <td><button type="button" class="btn btn-danger" ng-click="removeFromCart(item.productId)">Удалить из корзины</button></td>
+        </tr>
+        <tr>
+            <td>ИТОГО</td>
+            <td></td>
+            <td>{{cart.totalPrice}}</td>
+            <td><button type="button" class="btn btn-secondary" ng-click="clearCart()">Очистить корзину</button></td>
+        </tr>
+        <tr></tr>
+        <tr ng-show="!isUserLoggedIn()">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><button type="button" class="btn btn-info" ng-click="checkOrder()">Перейти к оформлению</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

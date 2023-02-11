@@ -29,7 +29,7 @@ public class Order {
     private List<OrderItem> items;
 
     @Column (name= "address")
-    private int address;
+    private String address;
 
     @Column (name= "phone")
     private int phone;

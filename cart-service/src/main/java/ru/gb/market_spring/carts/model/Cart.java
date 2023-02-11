@@ -17,9 +17,9 @@ public class Cart {
         this.items = new ArrayList<>();
         this.totalPrice = BigDecimal.ZERO;
     }
-    public List<CartItem> getItems(){
-        return Collections.unmodifiableList(items);
-    }
+//    public List<CartItem> getItems(){
+//        return Collections.unmodifiableList(items);
+//    }
     public void addProductToCart (ProductDto product){ //TODO: Д/З
         for (CartItem item: items) {
             if (item.getProductId().equals(product.getId())) {
@@ -65,7 +65,7 @@ public class Cart {
     private void recalculate(){
         totalPrice= BigDecimal.ZERO;
         for (CartItem item: items){
-            totalPrice.add(item.getPrice());
+            totalPrice = totalPrice.add(item.getPrice());
         }
     }
 }

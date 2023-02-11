@@ -65,9 +65,4 @@ public class CartController {
         String currentCartId = selectCartId(username, guestCartId);
         cartService.clearCurrentCartId(currentCartId);
     }
-//    @GetMapping("/new")
-//    public Cart newCart(){
-//        cartService.init();
-//        return cartService.getCurrentCart(currentCartId);
-//    }
 }

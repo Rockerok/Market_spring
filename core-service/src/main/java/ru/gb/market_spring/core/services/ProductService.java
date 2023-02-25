@@ -37,11 +37,19 @@ public class ProductService {
     }
 
     public Product createNewProduct (ProductDto productDto){
-        Product product = new Product();
-        product.setPrice(productDto.getPrice());
-        product.setTitle(productDto.getTitle());
+
         Category category = categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(() -> new ResourceNotFoundException("Category not found"));
-        product.setCategory(category);
+
+        // реализация Билдера для Java Архитектуры (Д/З-3
+        Product product = Product.newBuilder()
+                .price(productDto.getPrice())
+                .title(productDto.getTitle())
+                .category(category)
+                .build();
+
+//        product.setPrice(productDto.getPrice());
+//        product.setTitle(productDto.getTitle());
+//        product.setCategory(category);
         productRepository.save(product);
         return product;
     }

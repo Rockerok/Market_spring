@@ -35,4 +35,78 @@ public class Product {
     @CreationTimestamp
     @Column (name = "updated_at")
     private LocalDateTime updateAt;
+
+
+    // Реализация Билдера с помощью Плагина
+    private Product(Builder builder) {
+        setId(builder.id);
+        setTitle(builder.title);
+        setPrice(builder.price);
+        setCategory(builder.category);
+        setCreatedAt(builder.createdAt);
+        setUpdateAt(builder.updateAt);
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+    private void Builder() {
+    }
+
+    public static Builder newBuilder(Product copy) {
+        Builder builder = new Builder();
+        builder.id = copy.getId();
+        builder.title = copy.getTitle();
+        builder.price = copy.getPrice();
+        builder.category = copy.getCategory();
+        builder.createdAt = copy.getCreatedAt();
+        builder.updateAt = copy.getUpdateAt();
+        return builder;
+    }
+
+
+    public static final class Builder {
+        private long id;
+        private String title;
+        private BigDecimal price;
+        private Category category;
+        private LocalDateTime createdAt;
+        private LocalDateTime updateAt;
+
+
+
+        public Builder id(long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder price(BigDecimal price) {
+            this.price = price;
+            return this;
+        }
+
+        public Builder category(Category category) {
+            this.category = category;
+            return this;
+        }
+
+        public Builder createdAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Builder updateAt(LocalDateTime updateAt) {
+            this.updateAt = updateAt;
+            return this;
+        }
+
+        public Product build() {
+            return new Product(this);
+        }
+    }
 }

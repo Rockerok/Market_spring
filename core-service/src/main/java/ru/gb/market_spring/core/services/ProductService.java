@@ -10,6 +10,7 @@ import ru.gb.market_spring.api.ResourceNotFoundException;
 import ru.gb.market_spring.core.entities.Category;
 import ru.gb.market_spring.core.entities.Product;
 import ru.gb.market_spring.core.repositories.ProductRepository;
+import ru.gb.market_spring.core.repositories.proxy.ProductListProxy;
 import ru.gb.market_spring.core.repositories.specifications.ProductSpecifications;
 
 import java.util.List;
@@ -19,13 +20,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final ProductListProxy productCashRepository;
     private final CategoryService categoryService;
 
 //    public List<Product> findAll (Specification<Product> spec, int page) {
 //        return productRepository.findAll();
     public Page<Product> findAll (Specification<Product> spec, int page) {
         int sizePage = 10;
-        return productRepository.findAll(spec, PageRequest.of(page, sizePage));
+        return productCashRepository.findAll(spec, PageRequest.of(page, sizePage));
+//        return productRepository.findAll(spec, PageRequest.of(page, sizePage));
     }
 
     public Optional<Product> findById(Long id) {

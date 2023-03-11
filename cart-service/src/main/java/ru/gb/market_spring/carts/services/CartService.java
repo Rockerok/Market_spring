@@ -1,18 +1,23 @@
 package ru.gb.market_spring.carts.services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import ru.gb.market_spring.api.ProductDto;
 import ru.gb.market_spring.carts.integrations.ProductServiceIntegration;
+import ru.gb.market_spring.carts.listenerStat.Event;
+import ru.gb.market_spring.carts.listenerStat.EventPool;
 import ru.gb.market_spring.carts.model.Cart;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.function.Consumer;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CartService {
@@ -42,6 +47,7 @@ public class CartService {
         public void addCart(String cartId, Long productId){
             ProductDto product = productServiceIntegration.getProductById(productId);
             execute(cartId, cart -> cart.addProductToCart(product));
+            cartStat(product);
 //            Cart cart = getCurrentCart(cartId);
 //            cart.addProductToCart(product);
 //            redisTemplate.opsForValue().set(cartprefix + cartId,cart);
@@ -51,7 +57,15 @@ public class CartService {
 //            getCurrentCart(cartId).addProductToCart(product);
         }
 
-        public void remove(String cartId, Long productId){
+        // Spring Arch_HW5 сбор статистики (какие продукты добавляются в корзину) в Лог файл
+    private void cartStat(ProductDto product) {
+        EventPool eventPool = new EventPool();
+        eventPool.registerListener(event -> log.toString());
+        eventPool.start();
+        eventPool.publishEvent(new Event(product.getTitle()));
+    }
+
+    public void remove(String cartId, Long productId){
             ProductDto product = productServiceIntegration.getProductById(productId);
             execute(cartId, cart -> cart.remove(product));
 //            Cart cart = getCurrentCart(cartId);

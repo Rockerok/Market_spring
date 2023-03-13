@@ -21,12 +21,13 @@ import java.util.function.Consumer;
 @Service
 @RequiredArgsConstructor
 public class CartService {
-//        private Map<String, Cart> tempCart;
+
         private final ProductServiceIntegration productServiceIntegration;
         private final RedisTemplate <String,Object> redisTemplate;
         @Value("${cart-service.cart-prefix}")
         private String cartprefix;
 
+//        private Map<String, Cart> tempCart;
 //        @PostConstruct
 //        public void init(){
 //            tempCart=new HashMap<>();
@@ -35,7 +36,10 @@ public class CartService {
         public Cart getCurrentCart(String cartId){
             String TargetCarId = cartprefix + cartId;
 //            if (!tempCart.containsKey(TargetCarId)) {
-//                tempCart.put(TargetCarId, new Cart());
+//
+////             //   Identity Map Коллекция объектов
+//                instance.tempCart.put(TargetCarId, new Cart());
+////                tempCart.put(TargetCarId, new Cart());
 //            }
 //            return tempCart.get(TargetCarId);
             if(!redisTemplate.hasKey(TargetCarId)){
